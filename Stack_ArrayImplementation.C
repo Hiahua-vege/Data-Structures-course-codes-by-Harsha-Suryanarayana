@@ -25,6 +25,12 @@ int Top() {
     return A[top];
 }
 
+int IsEmpty()
+{
+    if (top == -1) return 1;
+    return 0;
+}
+
 void Print() {
     int i;
     printf("Stack: ");
