@@ -1,3 +1,4 @@
+//与基于数组实现的栈相比，基于列表实现的一个好处是不会出现栈溢出现象（StackOverflow）
 #include<stdio.h>
 #include<stdlib.h>
 
