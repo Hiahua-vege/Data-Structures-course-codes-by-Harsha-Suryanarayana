@@ -83,7 +83,7 @@ int FindMin(BstNode* root) {
         return root->data;
     }
     return FindMin(root->left);
-}//遍历做法
+}//递归做法
 
 //寻找最大值类似，区别为遍历右子树
 
@@ -95,4 +95,88 @@ int FindHeight (BstNode* root) {
     int leftHeight = FindHeight(root->left);
     int rightHeight = FindHeight(root->right);
     return max(leftHeight, rightHeight) + 1; 
+}
+
+//层次遍历
+void LevelOrder(Node* root) {
+    if (root == NULL) return;
+    queue<Node*> Q;
+    Q.push(root);
+    while (!Q.empty()) {
+        Node* current = Q.front();
+        cout << current->data << " ";
+        if (current->left != NULL) Q.push(current->left);
+        if (current->right != NULL) Q.push(current->right);
+        Q.pop();
+    }
+}
+
+//前序遍历
+void Preorder (Node* root) {
+    if (root == NULL) return;
+    cout << root->data;
+    Preorder(root->left);
+    Preorder(root->right);
+}
+
+//中序遍历
+void Inorder (Node* root) {
+    if (root == NULL) return;
+    Inorder (root->left);
+    cout << root->data;
+    Inorder (root->right);
+}
+
+//后序遍历
+void Postorder(Node* root) {
+    if (root == NULL) return;
+    Postorder(root->left);
+    Postorder(root->right);
+    cout << root->data;
+}
+
+//判断是否为BST
+bool IsSubtreeGreater (Node* root, int value) {
+    if (root == NULL) return true;
+    if (root->data > value)
+        && IsSubtreeGreater (root->left, value)
+        && IsSubtreeGreater (root->right, value)
+        return true;
+    else
+        return false;
+}
+
+bool IsSubtreeLesser(Node* root, int value)
+{
+    if(root == NULL) return true;
+    if(root->data <= value
+        && IsSubtreeLesser(root->left, value)
+        && IsSubtreeLesser(root->right, value))
+        return true;
+    else
+        return false;
+}
+
+bool IsBinarySearchTree (Node* root) {
+    if (IsSubtreeLesser(root->left, root->data)
+        && IsSubtreeGreater(root->left, root->data)
+        && IsBinarySearchTree(root->left)
+        && IsBinarySearchTree(root->right))
+        return true;
+    else
+        return false;
+}
+
+//IsSubtreeGreater与IsSubtreeLesser直接遍历成本较高
+//可以考虑定义中：左右子树元素的值都与根节点存在特定大小关系
+bool IsBinarySearchTree(Node* root, int minValue,int maxValue)
+{
+    if(root == NULL) return true;
+    if( root->data > minValue
+        && root->data < maxValue
+        && IsBinarySearchTree(root->left)
+        && IsBinarySearchTree(root->right))
+        return true;
+    else
+        return false;
 }
